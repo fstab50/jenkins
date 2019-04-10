@@ -56,18 +56,18 @@ RUN sed -i '/Defaults    secure_path/d' /etc/sudoers
 RUN echo "$USER ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 
+# configure home for $USER
 ADD ./bashrc  /home/$USER/.bashrc
+RUN mkdir -p /home/$USER/.config/bash
+ADD ./colors.sh /home/$USER/.config/bash/
+ADD ./motd-amazonlinux2.sh /home/$USER/.config/bash/motd.sh
+ADD ./loadavg-flat-layout.sh /home/$USER/.config/bash/loadavg-flat-layout.sh
+
 RUN chown -R $USER /home/$USER
 
 EXPOSE 8080
 
 USER $USER
-
-# configure home for $USER
-RUN mkdir -p /home/$USER/.config/bash
-ADD ./colors.sh /home/$USER/.config/bash/
-ADD ./motd-amazonlinux2.sh /home/$USER/.config/bash/motd.sh
-ADD ./loadavg-flat-layout.sh /home/$USER/.config/bash/loadavg-flat-layout.sh
 
 # environment variables
 ENV CONTAINER=jenkinsserver OS=amazonlinux DIST=amzn2
