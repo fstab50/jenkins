@@ -33,7 +33,7 @@ RUN yum install -y gcc gcc-c++ \
     yum clean all
 
 # user operations
-RUN export USER='dblake'
+ENV USER='dblake'
 RUN useradd dblake -d /home/$USER -u 1000 -m -G users,wheel
 
 # epel repository
@@ -54,14 +54,8 @@ VOLUME /mnt/rpm
 RUN sed -i '/Defaults    secure_path/d' /etc/sudoers
 RUN echo "$USER ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# rpmbuild deps
-RUN cd && rpmdev-setuptree
-RUN mv ~/rpmbuild /home/$USER/
 
 ADD ./bashrc  /home/$USER/.bashrc
-ADD ./.rpmmacros /home/$USER/
-ADD ./docker-buildrpm.sh /home/$USER/
-
 RUN chown -R $USER /home/$USER
 
 EXPOSE 8080
