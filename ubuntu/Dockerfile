@@ -31,7 +31,7 @@ WORKDIR /jenkins/src/
 RUN mvn clean install --batch-mode -Plight-test
 
 # The image is based on the previous weekly, new changes in jenkinci/docker are not applied
-FROM jenkins/jenkins:latest
+FROM jenkins/jenkins:lts
 
 LABEL Description="branch of the Jenkins core" Vendor="Jenkins Project"
 
