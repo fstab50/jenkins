@@ -1,6 +1,6 @@
 ##############################################################################
 ##                                                                          ##
-##    RPM Build Dockerfile: CentOS 7 Base image                             ##
+##    Jenkins Server Dockerfile: Amazon Linux 2 Base image                  ##
 ##                                                                          ##
 ##    Purpose:                                                              ##
 ##       Build container for rpm package assembly                           ##
@@ -31,18 +31,10 @@ RUN yum install -y gcc gcc-c++ \
                    automake autoconf \
                    yum-utils shadow-utils wget && \
     yum clean all
-RUN yum -y install rpm-build rpmdevtools
 
 # user operations
 RUN export USER='dblake'
-RUN useradd $USER -d /home/$USER -u 1000 -m -G users,wheel && \
-    echo "# macros"                      >  /home/$USER/.rpmmacros && \
-    echo "%_topdir    /home/$USER/rpmbuild" >> /home/$USER/.rpmmacros && \
-    echo "%_sourcedir %{_topdir}"        >> /home/$USER/.rpmmacros && \
-    echo "%_builddir  %{_topdir}"        >> /home/$USER/.rpmmacros && \
-    echo "%_specdir   %{_topdir}"        >> /home/$USER/.rpmmacros && \
-    echo "%_rpmdir    %{_topdir}"        >> /home/$USER/.rpmmacros && \
-    echo "%_srcrpmdir %{_topdir}"        >> /home/$USER/.rpmmacros
+RUN useradd $USER -d /home/$USER -u 1000 -m -G users,wheel
 
 # epel repository
 RUN wget -O epel.rpm –nv https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -82,7 +74,7 @@ ADD ./colors.sh /home/$USER/.config/bash/
 ADD ./motd-amazonlinux2.sh /home/$USER/.config/bash/motd.sh
 
 # environment variables
-ENV CONTAINER=rpmbuild OS=amazonlinux DIST=amzn2
+ENV CONTAINER=jenkinsserver OS=amazonlinux DIST=amzn2
 
 ##
 
