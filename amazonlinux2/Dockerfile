@@ -47,6 +47,13 @@ RUN yum -y update; yum clean all
 RUN yum -y install python3 python3-pip python3-setuptools
 RUN pip3 install -U pip setuptools
 
+
+# jenkins setup
+RUN wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+RUN rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+RUN yum -y update
+RUN yum -y install jenkins
+
 # mount volume here to cp completed rpm to on the host
 RUN mkdir /mnt/rpm
 VOLUME /mnt/rpm
