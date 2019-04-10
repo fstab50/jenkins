@@ -24,7 +24,7 @@ RUN yum -y groupinstall "Development Tools"
 
 RUN yum install -y procps wget \
                    highlight source-highlight \
-                   git vim jq bc
+                   git vim jq bc mlocate
 
 RUN yum install -y gcc gcc-c++  \
                    make automake autoconf \
