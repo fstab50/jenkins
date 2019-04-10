@@ -25,7 +25,7 @@ RUN yum -y groupinstall "Development Tools"
 RUN yum install -y gcc gcc-c++ \
                    libtool libtool-ltdl \
                    make cmake \
-                   git vim jq \
+                   git vim jq wget \
                    pkgconfig which util-linux \
                    sudo man-pages \
                    automake autoconf \
@@ -34,16 +34,16 @@ RUN yum install -y gcc gcc-c++ \
 
 # user operations
 RUN export USER='dblake'
-RUN useradd $USER -d /home/$USER -u 1000 -m -G users,wheel
+RUN useradd dblake -d /home/$USER -u 1000 -m -G users,wheel
 
 # epel repository
-RUN wget -O epel.rpm –nv https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN wget -O epel.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum -y install epel.rpm
 RUN yum -y install figlet
 RUN yum -y update; yum clean all
 
 # install python3.6 (requires epel)
-RUN yum -y install python3.6 python36-libs python3.6-devel python3-pip python3-setuptools
+RUN yum -y install python3 python3-pip python3-setuptools
 RUN pip3 install -U pip setuptools
 
 # mount volume here to cp completed rpm to on the host
