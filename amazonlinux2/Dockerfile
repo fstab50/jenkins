@@ -22,14 +22,15 @@ RUN yum -y update; yum clean all
 RUN yum -y groups mark convert
 RUN yum -y groupinstall "Development Tools"
 
-RUN yum install -y gcc gcc-c++ \
-                   libtool libtool-ltdl \
-                   make cmake \
-                   git vim jq wget \
+RUN yum install -y procps wget \
+                   highlight source-highlight \
+                   git vim jq bc
+
+RUN yum install -y gcc gcc-c++  \
+                   make automake autoconf \
                    pkgconfig which util-linux \
                    sudo man-pages \
-                   automake autoconf \
-                   yum-utils shadow-utils wget && \
+                   yum-utils shadow-utils && \
     yum clean all
 
 # user operations
@@ -66,6 +67,7 @@ USER $USER
 RUN mkdir -p /home/$USER/.config/bash
 ADD ./colors.sh /home/$USER/.config/bash/
 ADD ./motd-amazonlinux2.sh /home/$USER/.config/bash/motd.sh
+ADD ./loadavg-flat-layout.sh /home/$USER/.config/bash/loadavg-flat-layout.sh
 
 # environment variables
 ENV CONTAINER=jenkinsserver OS=amazonlinux DIST=amzn2

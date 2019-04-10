@@ -42,7 +42,7 @@ echo  "       $R KERNEL : ${cyan}$KERNEL${reset}      "
 echo  "       $R CPU    : ${cyan}$CPU${reset}         "
 echo  "       $R Uptime : ${cyan}$UTIME${reset}       "
 echo ""
-sh loadavg-flat-layout.sh  "C" 8 8; echo -e "${orange}${BOLD}"
+sh "$CONFIG_DIR/loadavg-flat-layout.sh"  "C" 8 8; echo -e "${orange}${BOLD}"
 echo -e "       "Amazon Linux" "$ID | figlet -f small
 echo  -e "${reset}====================================================================${reset}" | indent02
 echo ""
