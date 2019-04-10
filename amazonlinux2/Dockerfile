@@ -24,7 +24,7 @@ RUN yum -y groupinstall "Development Tools"
 
 RUN yum install -y procps wget \
                    highlight source-highlight \
-                   git vim jq bc mlocate
+                   git vim jq bc mlocate initscripts
 
 RUN yum install -y gcc gcc-c++  \
                    make automake autoconf \
@@ -38,7 +38,7 @@ ENV USER='dblake'
 RUN useradd dblake -d /home/$USER -u 1000 -m -G users,wheel
 
 # epel repository
-RUN wget -O epel.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN amazon-linux-extras install epel -y
 RUN yum -y install epel.rpm
 RUN yum -y install figlet
 RUN yum -y update; yum clean all
@@ -49,10 +49,12 @@ RUN pip3 install -U pip setuptools
 
 
 # jenkins setup
+RUN yum -y install java-1.8.0-openjdk-headless
 RUN wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
 RUN rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
 RUN yum -y update
 RUN yum -y install jenkins
+RUN chkconfig --level 35 jenkins on
 
 # mount volume here to cp completed rpm to on the host
 RUN mkdir /mnt/rpm
