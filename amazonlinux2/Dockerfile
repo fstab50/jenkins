@@ -49,7 +49,7 @@ RUN pip3 install -U pip setuptools
 
 
 # jenkins setup
-RUN yum -y install java-1.8.0-openjdk-headless
+RUN yum -y install java-1.8.0-openjdk
 RUN wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
 RUN rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
 RUN yum -y update
